@@ -16,16 +16,19 @@ services:
   
   node:
     image: node:15
-    container_name: node
     working_dir: /usr/src/app
+    container_name: node
     tty: true
     volumes:
       - ./node/:/usr/src/app
+      - /usr/src/app/node_modules
     depends_on:
       - mysql
     networks:
       - desafio-network
-    command: node index.js
+    command: >
+      sh -c "npm install &&
+             node index.js"
   
   nginx:
     image: nginx:1.15.0-alpine
