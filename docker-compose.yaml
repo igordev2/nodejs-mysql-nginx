@@ -15,9 +15,10 @@ services:
       - desafio-network
   
   node:
-    image: node:15
-    working_dir: /usr/src/app
+    build:
+      context: ./node
     container_name: node
+    entrypoint: dockerize -wait tcp://mysql:3306 -timeout 20s docker-entrypoint.sh
     tty: true
     volumes:
       - ./node/:/usr/src/app
